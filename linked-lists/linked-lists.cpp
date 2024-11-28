@@ -1,19 +1,123 @@
-// linked-lists.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
 
 #include <iostream>
+#include <cassert>
+using namespace std;
+
+
+// Declaration of a doubly-linked list
+class List {
+public:
+	int size = 0;
+	int capacity;
+
+	int* array;
+
+	List() {
+		capacity = 10;
+		array = new int[capacity];
+	}
+	List(int cap) {
+		capacity = cap;
+		array = new int[capacity];
+	}
+	List(int cap, int* init, int init_size) {
+		capacity = cap;
+		size = init_size;
+		array = new int[capacity];
+		for (int i = 0; i < init_size; i++) {
+			array[i] = init[i];
+		}
+	}
+
+	void push_back(const int& value) {
+		// Creamos un nuevo nodo
+		Node* node = new Node;
+		node->value = value;
+		node->next = nullptr;
+
+		if (num_elems == 0) {
+			// Si la lista está vacía, el nuevo nodo será el único
+			node->prev = nullptr;
+			first = last = node; // Enlazamos el primer y último nodo
+		}
+		else {
+			// Si ya hay elementos en la lista, añadimos al final
+			node->prev = last;
+			last->next = node;
+			last = node; // El nuevo nodo es ahora el último
+		}
+
+		num_elems++;  // Incrementamos el contador de elementos
+	}
+
+	void insert(unsigned int position, const int& value) {
+		if (capacity <= size) {
+			capacity *= 2;
+		}
+		int* newArray = new int[capacity];
+		size++;
+		int i;
+		for (i = 0; i < position; i++) {
+			newArray[i] = array[i];
+		}
+		newArray[i] = value;
+		i++;
+		while (i < size) {
+			newArray[i] = array[i - 1];
+			i++;
+		}
+		delete[] array;
+		array = newArray;
+	
+
+	}
+	void print() {
+		for (int i = 0; i < size; i++) {
+			cout << array[i] << ", ";
+		}
+
+		Node* current = first;
+		while (current != nullptr) {
+			cout << current->value << ", ";
+			current = current->next;
+		}
+		cout << endl;
+	}
+
+		
+
+
+private:
+	// Internal struct for list nodes
+	struct Node {
+		int value;
+		Node* next;
+		Node* prev;
+	};
+
+	// List internals
+	Node* first = nullptr;
+	Node* last = nullptr;
+	int num_elems = 0;
+};
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	string start[10];
+
+	List a(10);
+
+
+	a.insert(0, 1);
+	a.print();
+	a.insert(1,2);
+	a.print();
+	a.insert(2, 3);
+	a.print();
+	a.insert(3, 4);
+	a.print();
+	a.push_back(2);
+	a.print();
+
 }
-
-// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
-// Depurar programa: F5 o menú Depurar > Iniciar depuración
-
-// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
-//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
-//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
-//   4. Use la ventana Lista de errores para ver los errores
-//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
-//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
