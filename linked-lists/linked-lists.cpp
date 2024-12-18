@@ -4,7 +4,6 @@
 using namespace std;
 
 
-// Declaration of a doubly-linked list
 class List {
 public:
 	int size = 0;
@@ -30,24 +29,22 @@ public:
 	}
 
 	void push_back(const int& value) {
-		// Creamos un nuevo nodo
+		
 		Node* node = new Node;
 		node->value = value;
 		node->next = nullptr;
 
 		if (num_elems == 0) {
-			// Si la lista está vacía, el nuevo nodo será el único
 			node->prev = nullptr;
-			first = last = node; // Enlazamos el primer y último nodo
+			first = last = node; 
 		}
 		else {
-			// Si ya hay elementos en la lista, añadimos al final
 			node->prev = last;
 			last->next = node;
-			last = node; // El nuevo nodo es ahora el último
+			last = node;
 		}
 
-		num_elems++;  // Incrementamos el contador de elementos
+		num_elems++; 
 	}
 
 	void insert(unsigned int position, const int& value) {
@@ -88,14 +85,14 @@ public:
 
 
 private:
-	// Internal struct for list nodes
+	
 	struct Node {
 		int value;
 		Node* next;
 		Node* prev;
 	};
 
-	// List internals
+	
 	Node* first = nullptr;
 	Node* last = nullptr;
 	int num_elems = 0;
